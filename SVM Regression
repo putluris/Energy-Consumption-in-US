@@ -1,0 +1,7 @@
+from sklearn import preprocessing as pre scaler = pre.StandardScaler().fit(X_train) x_train_scaled = scaler.transform(X_train) x_test_scaled = scaler.transform(X_test)
+from sklearn import svm
+SVR_model = svm.SVR(kernel='rbf',C=100,gamma=.001) SVR_model.fit(x_train_scaled,y_train)
+pred2 = SVR_model.predict(x_test_scaled)
+pred2
+acc2 = SVR_model.score(x_test_scaled,y_test)
+acc2
