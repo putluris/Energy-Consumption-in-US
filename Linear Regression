@@ -1,0 +1,26 @@
+from sklearn.linear_model import LinearRegression from sklearn.model_selection import train_test_split from sklearn.metrics import accuracy_score
+def create_features(data):
+"""
+Creates time series features from datetime index
+"""
+data['date'] = data.index
+data['hour'] = data['date'].dt.hour
+data['dayofweek'] = data['date'].dt.dayofweek
+data['quarter'] = data['date'].dt.quarter
+data['month'] = data['date'].dt.month
+data['year'] = data['date'].dt.year
+data['dayofyear'] = data['date'].dt.dayofyear
+data['dayofmonth'] = data['date'].dt.day
+data['weekofyear'] = data['date'].dt.weekofyear
+X = data[['hour','dayofweek','quarter','month','year','dayofyear','dayofmonth','weekofyear']] return X
+X = create_features(df)
+y = df['AEP_MW']
+X.head()
+X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.3, random_state=1) lin_reg = LinearRegression()
+lin_reg.fit(X_train,y_train)
+pred = lin_reg.predict(X_test)
+pred
+lin_reg.score(X_test,y_test)
+from sklearn.metrics import r2_score
+acc = r2_score(y_test,pred)
+acc
